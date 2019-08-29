@@ -13,13 +13,9 @@ module.exports = {
       throw new Error('The defined filename is not a valid javascript file.');
     }
 
-    console.log(existsSync(filename));
-
     const configPath = existsSync(filename)
       ? resolve(filename)
       : resolve(process.cwd(), filename);
-
-    console.log(configPath);
 
     // The options Object to return.
     let options = {};
