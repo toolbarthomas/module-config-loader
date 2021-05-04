@@ -1,34 +1,34 @@
-const { existsSync } = require('fs');
-const { extname, resolve } = require('path');
-const validFilename = require('valid-filename');
+import { existsSync } from 'fs';
+import { extname, resolve } from 'path';
+import validFilename from 'valid-filename';
 
-module.exports = {
-  load(filename, relative) {
+export const load = async (filename, ...args) =>
+  new Promise((accept, reject) => {
     if (!existsSync(filename) && !validFilename(filename)) {
       throw new Error(`${filename} does not exists.`);
     }
 
     // Throw an exception if the filename is not a javascript file.
-    if (extname(filename) !== '.js') {
-      throw new Error('The defined filename is not a valid javascript file.');
+    if (extname(filename) && extname(filename) !== '.js') {
+      throw new Error(
+        'The javascript extension is only supported when using absolute paths...',
+      );
     }
 
-    const configPath = existsSync(filename)
-      ? resolve(filename)
-      : resolve(process.cwd(), filename);
-
-    // The options Object to return.
-    let options = {};
+    const configPath = existsSync(filename) ? resolve(filename) : filename;
 
     // Try to parse the defined configuration file.
-    if (existsSync(configPath)) {
-      try {
-        options = require(configPath);
-      } catch (err) {
-        throw new Error(err);
-      }
+    try {
+      import(configPath).then((m) => {
+        if (m.default) {
+          accept(typeof m.default === 'function' ? m.default(args) : m.default);
+        }
+      });
+    } catch (err) {
+      reject(err);
     }
+  });
 
-    return options;
-  },
+export default {
+  load,
 };
