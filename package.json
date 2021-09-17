@@ -1,11 +1,11 @@
 {
   "name": "module-config-loader",
-  "version": "1.0.1",
+  "version": "1.1.0",
   "description": "Define environment specific configuration for your NPM module.",
-  "main": "index.js",
+  "main": "src/index.js",
   "type": "module",
   "scripts": {
-    "start": "node ./index.js"
+    "start": "node ./src/index.js"
   },
   "repository": {
     "type": "git",
@@ -24,11 +24,11 @@
   },
   "homepage": "https://github.com/toolbarthomas/module-config-loader#readme",
   "devDependencies": {
-    "eslint": "^7.25.0",
+    "eslint": "^7.32.0",
     "eslint-config-airbnb-base": "^14.2.1",
-    "eslint-plugin-import": "^2.22.1"
+    "eslint-plugin-import": "^2.24.2"
   },
   "dependencies": {
-    "valid-filename": "^3.1.0"
+    "valid-filename": "^4.0.0"
   }
 }

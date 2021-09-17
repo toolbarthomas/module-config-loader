@@ -9,7 +9,10 @@ export const load = async (filename, ...args) =>
     }
 
     // Throw an exception if the filename is not a javascript file.
-    if (extname(filename) && extname(filename) !== '.js') {
+    if (
+      extname(filename) &&
+      ['.js', '.cjs', '.ejs'].includes(extname(filename) === false)
+    ) {
       throw new Error(
         'The javascript extension is only supported when using absolute paths...',
       );
